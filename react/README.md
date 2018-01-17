@@ -1,7 +1,9 @@
 # React JS
 ---
 
+
 ### 1、初始化项目
+
 
 ```
     #安装react自动配置工具
@@ -31,14 +33,19 @@
 
 ---
 
+
 ### 2、react 问题汇总
+
 
 [https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#updating-to-new-releases](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#updating-to-new-releases)
 
 
 ---
 
+
+
 ### 3、Hello World
+
 
 ***显示页面：index.html***
 ```html
@@ -75,6 +82,71 @@
 ```
 
 
+### 4、const 定义元素(JSX)
 
 
+```
+    const element = <h1>Hello, world</h1>;
+    ReactDOM.render(
+      element,
+      document.getElementById('root')
+    );
+```
+
+
+***App.js***
+```
+    import React, { Component } from 'react';
+    
+    // string const
+    const hello = <h1>Hello, world</h1>;
+    const user = {
+        firstName: 'Harper',
+        lastName: 'Perez'
+    };
+    
+    //name function
+    function formatName(user) {
+        return user.firstName + ' ' + user.lastName;
+    }
+    
+    class App extends Component {
+      render() {
+        return (
+            <h1>
+                Hello, {formatName(user)}
+            </h1>
+        );
+      }
+    }
+    
+    export default App;
+```
+
+
+
+### 5、更新元素
+
+
+元素加载后不可更改，只能用新元素去替换
+
+```
+    function tick() {
+      const element = (
+        <div>
+          <h1>Hello, world!</h1>
+          <h2>
+            It is{' '}
+            {new Date().toLocaleTimeString()}.
+          </h2>
+        </div>
+      );
+      ReactDOM.render(
+        element,
+        document.getElementById('root')
+      );
+    }
+    
+    setInterval(tick, 1000);
+```
 
