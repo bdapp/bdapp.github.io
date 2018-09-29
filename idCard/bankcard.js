@@ -58,24 +58,18 @@ function getBank_account() {
                 prefix = "622908";
                 bankName = "兴业银行";
                 break;
-            case 13:     //常熟农村商业银行-粒金借记卡(银联卡)-借记卡
-                prefix = "622323";
-                bankName = "常熟农村商业银行";
-                break;
-            case 14:     //工商银行-牡丹灵通卡-借记卡
-                prefix = "622309";
-                bankName = "工商银行";
-                break;
+           
             default:
         }
 
         //随机生成16或19位长度的卡号
         var len = [10, 13];
-        for (var j = 0; j < len[Math.floor(Math.random()*2)]; j++) {
+        for (var j = 0; j < len[Math.ceil(Math.random()*2)]; j++) {
             prefix = prefix + Math.floor(Math.random() * 10);
         }
 
         if (luhmCheck(prefix)) {
+            if(verify(prefix))
             return prefix + " (" + bankName + ")"
         }
     }
@@ -96,6 +90,10 @@ function getBank_account() {
 
 //bankno为银行卡号 banknoInfo为显示提示信息的DIV或其他控件
 function luhmCheck(bankno) {
+    if(bankno.length != 16 && bankno.length != 19){
+        return false;
+    }
+
     var lastNum = bankno.substr(bankno.length - 1, 1);//取出最后一位（与luhm进行比较）
 
     var first15Num = bankno.substr(0, bankno.length - 1);//前15或18位
@@ -158,3 +156,6 @@ function luhmCheck(bankno) {
         return false;
     }
 }
+
+
+    
