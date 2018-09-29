@@ -3,84 +3,11 @@
 
 <head>
     <script type="text/javascript">
-      
-      function verify(bankCard){
-          var result=null;
-            $.ajax({
-                url:'https://ccdcapi.alipay.com/validateAndCacheCardInfo.json?cardNo='+bankCard+'&cardBinCheck=true',
-                type:'GET', //GET
-                async:false,    //或false,是否异步
-                
-                timeout:5000,    //超时时间
-                dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
-                beforeSend:function(xhr){
-                    console.log(xhr)
-                    console.log('发送前')
-                },
-                success:function(data,textStatus,jqXHR){
-                    console.log(data.stat)
-                    result = data.stat;
-                    console.log(textStatus)
-                    console.log(jqXHR)
-                },
-                error:function(xhr,textStatus){
-                    console.log('错误')
-                    console.log(xhr)
-                    console.log(textStatus)
-                },
-                complete:function(){
-                    console.log('结束')
-                }
-            })
-
-        console.log(result);
-        return result =='ok';
-        
-      }
-        
-        //生成随机手机号
-        function getMoble() {
-
-            var prefixArray = new Array("130", "131", "132", "133", "135", "137", "138", "158", "159", "170", "186", "187", "189");
-            var i = parseInt(10 * Math.random());
-            var prefix = prefixArray[i];
-
-            for (var j = 0; j < 8; j++) {
-                prefix = prefix + Math.floor(Math.random() * 10);
-            }
-
-            return prefix;
-        }
-
-
-        // 生成随机身份证号
-        function getId_no() {
-            var coefficientArray = ["7", "9", "10", "5", "8", "4", "2", "1", "6", "3", "7", "9", "10", "5", "8", "4", "2"];// 加权因子
-            var lastNumberArray = ["1", "0", "X", "9", "8", "7", "6", "5", "4", "3", "2"];// 校验码
-
-            var firstId = ["11", "12", "13", "14", "15", "21", "22", "23", "31", "32", "33", "34", "35", "36", "37", "41", "42", "43", "44", "45", "46", "50", "51", "52", "53", "54", "61", "62", "63", "64", "65"];
-            var i = Math.floor(Math.random() * firstId.length);
-            var address = firstId[i] + "0101"; // 住址
-            var year = Math.floor(Math.random() * 9);
-            var month = Math.ceil(Math.random() * 9);
-            var day = Math.ceil(Math.random() * 9);
-            var birthday = "198"+year+"0"+month+"0"+day; // 生日
-            var s = Math.floor(Math.random() * 10).toString() + Math.floor(Math.random() * 10).toString() + Math.floor(Math.random() * 10).toString();
-            var array = (address + birthday + s).split("");
-            var total = 0;
-            for (i in array) {
-                total = total + parseInt(array[i]) * parseInt(coefficientArray[i]);
-            }
-            var lastNumber = lastNumberArray[parseInt(total % 11)];
-            return address + birthday + s + lastNumber;
-        }
-
-
-
-        function genrate() {
+           
+        function genrate(verifyBank) {
             trs = '';
             for (var i = 1; i <= 10; i++) {
-                trs = trs + '<tr><td>' + i + '</td><td>' + getName() + '</td><td> 手机号：' + getMoble() + ' <br/>身份证：' + getId_no() + ' <br/>银行卡：' + getBank_account() + '</td></tr>';
+                trs = trs + '<tr><td>' + i + '</td><td>' + getName() + '</td><td> 手机号：' + getMoble() + ' <br/>身份证：' + getId_no() + ' <br/>银行卡：' + getBank_account(verifyBank) + '</td></tr>';
             }
             trs = '<table>' + trs + '</table>';
             
@@ -89,6 +16,7 @@
 
     </script>
     <script type="text/javascript" src="bankcard.js"></script>
+    <script type="text/javascript" src="bankcard_verify.js"></script>
     <script type="text/javascript" src="identify.js"></script>
     <script type="text/javascript" src="jquery-2.2.0.min.js"></script>
     
@@ -138,14 +66,14 @@
     </style>
 </head>
 
-<body onload="genrate()">
+<body onload="genrate(1)">
     <div class="des">
         <h1>模拟生成姓名、手机、身份证、银行卡（仅供测试用）</h1>
-        <button type="button" onclick="genrate()">Test</button>
+        <button type="button" onclick="genrate(1)">Test</button>
 
         <div id="list"></div>
 
-        <button type="button" onclick="genrate()">Test</button>
+        <button type="button" onclick="genrate(0)">Test(No Verify)</button>
     </div>
 </body>
 

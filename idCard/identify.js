@@ -1,3 +1,42 @@
+
+//生成随机手机号
+function getMoble() {
+
+    var prefixArray = new Array("130", "131", "132", "133", "135", "137", "138", "158", "159", "170", "186", "187", "189");
+    var i = parseInt(10 * Math.random());
+    var prefix = prefixArray[i];
+
+    for (var j = 0; j < 8; j++) {
+        prefix = prefix + Math.floor(Math.random() * 10);
+    }
+
+    return prefix;
+}
+
+
+// 生成随机身份证号
+function getId_no() {
+    var coefficientArray = ["7", "9", "10", "5", "8", "4", "2", "1", "6", "3", "7", "9", "10", "5", "8", "4", "2"];// 加权因子
+    var lastNumberArray = ["1", "0", "X", "9", "8", "7", "6", "5", "4", "3", "2"];// 校验码
+
+    var firstId = ["11", "12", "13", "14", "15", "21", "22", "23", "31", "32", "33", "34", "35", "36", "37", "41", "42", "43", "44", "45", "46", "50", "51", "52", "53", "54", "61", "62", "63", "64", "65"];
+    var i = Math.floor(Math.random() * firstId.length);
+    var address = firstId[i] + "0101"; // 住址
+    var year = Math.floor(Math.random() * 9);
+    var month = Math.ceil(Math.random() * 9);
+    var day = Math.ceil(Math.random() * 9);
+    var birthday = "198"+year+"0"+month+"0"+day; // 生日
+    var s = Math.floor(Math.random() * 10).toString() + Math.floor(Math.random() * 10).toString() + Math.floor(Math.random() * 10).toString();
+    var array = (address + birthday + s).split("");
+    var total = 0;
+    for (i in array) {
+        total = total + parseInt(array[i]) * parseInt(coefficientArray[i]);
+    }
+    var lastNumber = lastNumberArray[parseInt(total % 11)];
+    return address + birthday + s + lastNumber;
+}
+
+
 // 生成随机姓名
 function getName() {
     var familyNames = new Array(
