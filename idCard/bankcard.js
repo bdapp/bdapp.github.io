@@ -72,14 +72,19 @@ function getBank_account(verifyBank) {
             //校验银行卡真实性
             if (verifyBank == 1) {
                 if (verify(prefix))
-                    return prefix + " (" + bankName + ")"
+                    return formatCardNum(prefix) + " (" + bankName + ")"
             } else {
-                return prefix + " (" + bankName + ")"
+                return formatCardNum(prefix) + " (" + bankName + ")"
             }
         }
     }
 }
 
+
+//4个数字一组分隔银行卡号 
+function formatCardNum(bankno){
+    return bankno.replace(/(\d{4})(?=\d)/g, "$1 ");
+}
 
 //Create Time:  07/28/2011
 //Operator:     刘政伟
